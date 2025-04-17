@@ -1,0 +1,29 @@
+name: Build and Version
+ 
+on:
+  push:
+    branches: 
+      - feature/03
+ 
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Use Versioning Action
+        id: version
+        uses: ./.github/actions/versioner
+ 
+      - name: Build JAR
+        run: |
+          mkdir dist
+          echo "dummy content" > dist/myapp-${{ steps.version.outputs.version }}.jar
+ 
+      - name: Show Artifact Name
+        run: echo "📦 Built myapp-${{ steps.version.outputs.version }}.jar"
+ 
+      - name: Create Git Tag
+        run: |
+          # git config user.name "github-actions"
+          # git config user.email "github-actions@github.com"
+          git tag ${{ steps.version.outputs.tag }}
+          git push origin ${{ steps.version.outputs.tag }}
