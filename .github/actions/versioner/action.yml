@@ -1,0 +1,12 @@
+name: "Artifact Versioner"
+description: "Auto-increments artifact versions based on commit messages"
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Get Next Version
+      shell: bash
+      run: |
+        chmod +x ${{ github.action_path }}/version.sh
+        ${{ github.action_path }}/version.sh
