@@ -9,6 +9,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4.2.2
+
       - name: Use Versioning Action
         id: version
         uses: ./.github/actions/versioner
